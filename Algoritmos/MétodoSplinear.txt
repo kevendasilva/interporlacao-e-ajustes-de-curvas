@@ -1,0 +1,11 @@
+FUNÇÃO splinear(x, y, xint)
+  
+  PARA i = 1:length(x)-1
+    // Verificando em que intervalo está o x interpolado
+    SE ((xint >= x(i)) && (xint <= x(i+1)))
+      yint = ((xint - x(i+1))/(x(i) - x(i+1)))*y(i) + ((xint - x(i))/(x(i+1) - x(i)))*y(i+1);
+      finalize;    
+    FIM SE
+  FIM PARA
+
+FIM 

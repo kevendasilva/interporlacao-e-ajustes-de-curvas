@@ -1,0 +1,39 @@
+FUNÇÃO newton(x, y, xint)
+
+  yint
+
+  // Coeficientes
+  a = [];
+
+  //O primeiro coeficiente é o valor do primeiro elemento de y
+  a(1) = y(1);
+
+  // Vetor das diferenças divididas
+  diferencas = [];
+
+  // Cálculo das diferenças divididas simples
+  PARA i = 1 ATÉ (tamanho(x) - 1)
+    diferencas(i,1) = (y(i+1) - y(i))/(x(i+1) - x(i));
+  FIM PARA
+  
+  // Cálculo das diferenças divididas de ordem 2 em diante
+  PARA j = 2 ATÉ tamanho(x) - 1
+    PARA i = 1 ATÉ tamanho(x) - j
+      diferencas(i,j) = (diferencas(i+1, j-1) - diferencas(i,j-1))/(x(j+i) - x(i));
+    FIMPARA
+  FIM PARA
+
+  // Cálculo dos demais coeficientes
+  PARA j = 2 ATÉ tamanho(x)
+    a(j) =  diferencas(1,j-1);
+  FIMPARA
+  
+  // Encontrando o valor de yint
+  yint = a(1);
+  xn = 1;
+  PARA k = 2 ATÉ tamanho(x)
+    xn = xn*(xint - x(k-1));
+    yint = yint + (a(k)*xn);
+  FIM PARA
+
+FIM FUNÇÃO

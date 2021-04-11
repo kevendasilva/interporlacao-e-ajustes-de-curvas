@@ -1,0 +1,18 @@
+FUNÇÃO lagrange(x, y, xint)
+  REAL yint = 0;
+
+  // Produtório para o cálculo das funções de Lagrange
+  FUNÇÃO lagfunc(xis, k, xinterp)
+    REAL p = 1;
+    PARA j = 1 ATÉ tamanho(xis)
+      SE j != k
+        p = p*((xinterp-xis(j))/(xis(k) - xis(j)));
+      FIM SE
+    FIM PARA
+  FIM FUNÇÃO
+
+  // Somatório para encontrar o valor de y interpolado
+  PARA i = 1 ATÉ tamanho(x)
+    yint = yint + (y(i)*lagfunc(x, i, xint));
+  FIM PARA
+FIM FUNÇÃO

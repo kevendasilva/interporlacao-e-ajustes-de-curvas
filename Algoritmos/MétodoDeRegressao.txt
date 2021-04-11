@@ -1,0 +1,64 @@
+FUNÇÃO regressao(x, y)
+  fx
+
+  // Tamanho dos vetores 
+  n = tamanho(x,2);
+
+  // Somatório dos elementos de x
+  FUNÇÃO sumx(xis)
+    s = 0;
+    PARA j = 1 ATÉ tamanho(xis,2);
+      s = s + xis(j);
+    FIM PARA
+  FIM 
+
+  // Somatório dos elementos de y
+  FUNÇÃO sumy(yps)
+    s = 0;
+    PARA j = 1 ATÉ tamanho(yps,2)
+      s = s + yps(j);
+    FIM PARA
+  FIM 
+
+  // Somatório de x_j*y_j
+  FUNÇÃO sumxy(xis, yps)
+    s = 0;
+    PARA j = 1 ATÉ tamanho(xis,2)
+      s = s + xis(j)*yps(j);
+    FIM PARA
+  FIM 
+
+  // Somatório dos valores ao quadrado de x
+  FUNÇÃO s = sumxx(xis)
+    s = 0;
+    PARA j = 1 ATÉ tamanho(xis,2)
+      s = s + (xis(j))^2;
+    FIM PARA
+  FIM 
+
+  // Erro global
+  FUNÇÃO erroglobal(xis, yps, aum, azero)
+    s = 0;
+    PARA j = 1 ATÉ tamanho(xis,2)
+      s = s + (yps(j) - (aum*xis(j) + azero))^2;
+    FIM PARA
+  FIM 
+
+  // Encontrando o valor do coeficiente a1
+  a1 = (n*sumxy(x,y) - sumx(x)*sum(y))/(n*sumxx(x) - (sumx(x))^2);
+  // Encontrando o valor do coeficiente a0
+  a0 = (sumxx(x)*sumy(y) - sumxy(x,y)*sumx(x))/(n*sumxx(x) - (sumx(x))^2);
+
+  // Função da reta da regressão
+  fx = a1*x + a0;
+
+  printf("Equação da reta ATÉ  %f*x + %f\n", a1, a0);
+  printf("Erro Global ATÉ  %f\n", erroglobal(x, y, a1, a0));
+
+  // Plotando gráfico do conjunto de pontos e reta da regressão
+  plot(x,y, 'r.', 'markertamanho', 20, x, fx, 'linewidth', 1);
+  title('Regressão Linear');
+  legFIM ('conjunto de pontos', 'regressão linear');
+  xlabel('x'); ylabel('y');
+
+FIM 
