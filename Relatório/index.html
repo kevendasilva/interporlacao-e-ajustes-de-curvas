@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <!-- Estilo :O -->
+    <link rel="stylesheet" href="stylesheet/style.css">
+
+    <!-- Inserindo LaTex Code -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+      src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Trabalho 4 - Interpolação e Ajuste de Curvas</title>
+  </head>
+
+  <body>
+    <section class="container py-3 bg-warning" id="begin">
+      <div class="row justify-content-center">
+        <div class="col-lg-1 text-center">
+          <img src="img/logo-ufc.PNG" class="img-fluid">
+        </div>
+        <div class="col-lg-12 text-center pb-3">
+          <p>
+            <h5><strong>Universidade Federal do Ceará <br>
+              Centro de Tecnologia <br>
+              Departamento de Engenharia de Teleinformática <br>
+              Curso de graduação em Engenharia de Computação <br></strong></h5>
+          </p>
+        </div>
+        <div class="col-lg-12 text-center">
+          <p>
+            <h5><strong>Trabalho 3 - Integração Numérica <br>
+              <br>
+              Keven da Silva Gonçalves</strong></h5>
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- SUMARIO -->
+    <section class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 text-center">
+          <h3><strong>Sumário</strong></h3>
+        </div>
+        <div class="col-lg-12 px-5">
+          <ol>
+            <li><a href="#introdução">Introdução</a></li>
+            <li><a href="#desenvolvimento">Desenvolvimento</a></li>
+            <ol>
+              <li><a href="#retangulo">Método do retângulo</a></li>
+              <li><a href="#trapezoidal">Métodos trapezoidal</a></li>
+            </ol>
+            <li><a href="#resultados">Resultados e conclusão</a></li>
+            <ol>
+              <li><a href="#retangulo_comp">Método do retângulo composto</a></li>
+              <li><a href="#trapezoidal_comp">Métodos trapezoidal composto</a></li>
+            </ol>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Introdução -->
+    <section class="container py-4" id="introdução">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2><strong>1. Introdução</strong></h2>
+          <p>
+            Em diversos problemas da ciência e engenharia, quando queremos calcular determinadas
+            grandezas, nos deparamos com cálculos que envolvem integrais. No geral, temos integrais
+            da forma: 
+            $$\int_a^bf(x)dx$$
+            o processo de solução da integral acima começa com a determinação da função primitiva de $f(x)$.
+            De modo que,
+            $$\int_a^bf(x)dx = F(b) - F(a)$$
+            onde $F$ é a primitiva de $f$. No entanto, quando o processo de determinação da primitiva de $f$
+            é dificil, ou até mesmo impossível, utilizamos a integração numérica como alternativa. Nesse trabalho
+            serão abordados dois métodos: o método do <a href="#retangulo">retângulo</a> e o método <a href="#trapezoidal">trapezoidal</a>. Ambos utilizados para determinar
+            uma solução numérica para uma integral.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Desenvolvimento -->
+
+    <section class="container py-4" id="desenvolvimento">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2><strong>2. Desenvolvimento</strong></h2>
+        </div>
+        <div class="col-lg-12 px-5" id="retangulo">
+          <h3><strong>2.1 Método do retângulo</strong></h3>
+          <h5><i>2.1.1 Método do retângulo composto</i></h5>
+          <p>
+            No método do retângulo composto, dividimos o intervalo $[a,\ b]$ em $N$ subintervalos e em seguida aplicamos
+            o método do retângulo para cada um. No método do retângulo, utilizamos o ponto inicial do intervalo (ou final),
+            para determinar a área de um retângulo, que aproxima a área da integral no intervalo em questão. A figura a
+            seguir exemplifica a divisão do intervalo $[a,\ b]$ e a aplicação do método do retângulo para cada subintervalo.
+          </p>
+          <div class="col-lg-12 text-center">
+            <img src="img/fig1.jpg">
+          </div>
+          <p>
+            A integral nos limites $a$ e $b$ pode ser escrita como a soma das integrais nos subintervalos, ou seja
+            $$\int_a^bf(x)dx = I_1 + I_2 + I_3 + \cdots + I_N$$
+            onde 
+            $$I_i \approx f(x_i)(x_{i\ +\ 1} - x_i)$$
+            Portanto, temos que a integral é aproximadamente:
+            $$\int_a^bf(x)dx \approx \sum\limits_{i = 1}^Nf(x_i)(x_{i\ +\ 1} - x_i)$$
+            Para o caso em que a largura dos subintervalos são iguais, ou seja, $x_{i\ +\ 1} - x_i$ igual a uma
+            constante, temos:
+            $$\int_a^bf(x)dx \approx h \sum\limits_{i = 1}^Nf(x_i)$$
+            onde $h$ é a largura dos subintervalos.
+          </p>
+          <div class="col-lg-12">
+            <h5><i>2.1.2 Fluxograma para o método do retângulo composto</i></h5>
+            <p>
+              Fluxograma desenhado com base no pseudocódigo do método do retângulo composto.
+            </p>
+            <div class="col-lg-12 text-center">
+              <img src="../Fluxogramas/MétodoDoRetângulo.png" style="width: 50%;">
+            </div>
+          </div>
+          <div class="col-lg-12 py-3">
+            <h5><i>2.1.3 Pseudocódigo para o método do retângulo composto</i></h5>
+            <div class="col-lg-10 code">
+              <pre>
+                <code>
+    1. /* 
+    2.  * Método do retângulo composto
+    3.  * 
+    4.  * Função escolhida f(x) = 3e^{-t}sin(\pi t)
+    5.  * 
+    6.  * Limites de integração : [0, 1]
+    7.  * 
+    8.  * Número de intervalos: N = 369
+    9.  *
+    10. * O parâmetro 'opc' define qual dos pontos, inicial ('i') ou final ('f'),
+    11. * deve ser utilizado.
+    12. */
+    13.
+    14. Inicio algoritmo
+    15.
+    16.  // Método do retângulo composto
+    17.  FUNÇÂO rectangle(initial, final, n_interval, opc = 'i')
+    18.    // Passo
+    19.    h_size = (final - initial) / n_interval.to_f
+    20.    // Escolha, ponto inicial ou final?
+    21.    initial += h_size SE opc == 'f'
+    22.    // Ponto da vez
+    23.    point = 1
+    24.    // Resultado da integração numérica
+    25.    result = 0
+    26.    // Laço principal
+    27.    ENQUANTO point <= n_interval FAÇA
+    28.      // Somatório
+    29.      result += h_size * f(initial)
+    30.      // Incremento na variável 'x'
+    31.      initial += h_size
+    32.      // Ponto da vez
+    33.      point += 1
+    34.    FIM ENQUANTO
+    35.    // Retornando o resultado da integração numérica
+    36.    RETORNE result
+    37.  FIM FUNÇÃO
+    38.
+    39. Fim algoritmo
+                </code>
+              </pre>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-12 px-5" id="trapezoidal">
+          <h3><strong>2.2 Método trapezoidal</strong></h3>
+          <h5><i>2.2.1 Método trapezoidal composto</i></h5>
+          <p>
+            De forma semelhante ao método do retângulo composto, aqui dividiremos o intervalo $[a,\ b]$ em
+            $N$ subintervalos e em seguida, para cada subintervalo aplicaremos o método trapezoidal. Nesse método,
+            em vez de utilizarmos um retângulo para aproximar a integral, nós utilizamos trapezóides (retângulo +
+            triângulo) para aproximar a integral nos intervalos.
+            <br>
+            A aplicação do método em $N$ subintervalos é exibida na figura a seguir.
+          </p>
+          <div class="col-lg-12 text-center">
+            <img src="img/fig2.jpg">
+          </div>
+          <p>
+            Para um subintervalo $[x_i, x_{i\ +\ 1}]$, ao aplicar o método trapezoidal temos:
+            $$I_i = \int_{x_i}^{x_{i+1}} f(x) \,dx  \approx \frac{[f(x_i) + f(x_{i+1})]}{2}(x_{i+1} - x_i)$$
+            Somando todos os valores dados por $I_i$, temos o seguinte somatório:
+            $$I \approx \frac{1}{2}\sum\limits_{i = 1}^N[f(x_i) + f(x_{i+1})](x_{i+1} - x_i)$$
+            Portanto, a integral é aproximada a partir do resultado dado por $I$. Para o caso em que a largura
+            dos subintervalos são iguais, temos
+            $$I \approx \frac{h}{2}\sum\limits_{i = 1}^N[f(x_i) + f(x_{i+1})]$$
+            onde $h$ é a largura do subintervalos, ou seja, $x_{i+1} - x_i = h$. Podemos ainda, expandir o somatório
+            e simplica-lo. O resultado é o seguinte:
+            $$I \approx \frac{h}{2}(f(a) + 2f(x_2) + 2f(x_3) + \cdots + 2f(x_N) + f(b))$$
+            ou
+            $$I \approx \frac{h}{2}[f(a) + f(b)] + h\sum\limits_{i = 1}^Nf(x_i)$$
+          </p>
+          <div class="col-lg-12">
+            <h5><i>2.2.2 Fluxograma para o método trapezoidal composto</i></h5>
+            <p>
+              Fluxograma desenhado com base no pseudocódigo do método trapezoidal composto. 
+            </p>
+            <div class="col-lg-12 text-center">
+              <img src="../Fluxogramas/MétodoTrapezoidal.png" style="width: 80%;">
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <h5><i>2.2.3 Pseudocódigo para o método trapezoidal</i></h5>
+            <div class="col-lg-10 code">
+              <pre>
+                <code>
+    1. /* 
+    2.  * Método trapezoidal composto
+    3.  * 
+    4.  * Função escolhida f(x) = 3e^{-t}sin(\pi t)
+    5.  * 
+    6.  * Limites de integração : [0, 1]
+    7.  * 
+    8.  * Número de intervalos: N = 369
+    9.  *
+    10. */
+    11.
+    12. Inicio algoritmo
+    13.
+    14.  FUNÇÃO trapezoid(initial, final, n_interval)
+    15.    // Passo
+    16.    h_size = (final - initial) / n_interval.to_f
+    17.    // Ponto da vez
+    18.    point = 1
+    19.    // Ponto inicial
+    20.    a = initial
+    21.    // Resultado da integração numérica
+    22.    result = 0
+    23.    // Laço principal
+    24.    ENQUANTO point <= n_interval FAÇA
+    25.      result += h_size * Function.f(initial)
+    26.      // Incremento na variável 'x'
+    27.      initial += h_size
+    28.      // Ponto da vez
+    29.      point += 1
+    30.    FIM ENQUANTO
+    31.    result += h_size * (Function.f(a) + Function.f(final)) / 2
+    32.    // Retornando o resultado 
+    33.    RETORNE result 
+    34.  FIM FUNÇÃO
+    35.
+    36. Fim algoritmo
+                </code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resultados e conclusão -->
+
+    <section class="container py-4" id="resultados">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <h2><strong>3. Resultados e conclusão</strong></h2>
+        </div>
+        <div class="col-lg-12 px-5" id="retangulo_comp">
+         <h3><strong>3.1 Método do retângulo composto</strong></h3>
+          <p>
+            A função escolhida para ser utilizada na implementação dos métodos, foi a função:
+            $$f(x) = 3e^{-x}sin(\pi x)$$
+            e o intervalo escolhido foi: $[0,\ 1]$. Logo, o cálculo da integral
+            $$\int_0^1 f(x) \, dx = \int_0^1 3e^{-x}sin(\pi x) \, dx$$
+            A implementação realizada (em Ruby), foi feita de tal maneira, que o resultado encontrado apresentasse o erro relativo
+            real menor de 0.003. O algoritmo inicia com o número de intervalos igual a 1. Então, o método do retângulo composto é aplicado,
+            e o erro relativo real é calculado. Caso o resultado encontrado apresente erro menor ou igual a 0.003, o valor é retornado. Se não, 
+            a função é chamada novamente, mas agora com o número de intervalos igual a 2. O processo é repetido de forma iterativa, até 
+            que o número de intervalos escolhido, retorne o resultado com erro menor que, ou igual a 0.003. Para a função $f(x)$, o número de 
+            intervalos foi $N = 18$. E, o resultado da integração numérica foi aproximadamente 1.18273904.
+          </p>
+        </div>
+        <div class="col-lg-12 px-5" id="trapezoidal_comp">
+          <h3><strong>3.2 Método trapezoidal composto</strong></h3>
+          <p>
+            Para o método trapezoidal, a mesma função $f(x)$ foi utilizada. A implementação do método é bem similar ao Método
+            do retângulo composto. Exceto pela adição do fator:
+            $$\frac{h}{2}[f(a) + f(b)]$$
+            no final do laço principal da função. No entanto, como os valores da função em $a$ e $b$ são iguais a zero, 
+            temos que:
+            $$I \approx \frac{h}{2}[0 + 0] + h\sum\limits_{i = 1}^Nf(x_i)$$
+            ou seja
+            $$I \approx h\sum\limits_{i = 1}^Nf(x_i)$$
+            verificamos, portanto, que o resultado da integração numérica, é o mesmo encontrado no método do retângulo composto.
+            De fato, o resultado retornado pela implementação do método foi aproximadamente 1.18273904. E o mesmo número de intervalos foi
+            utilizado $N = 18$.
+          </p>
+        </div>
+        <div class="col-lg-12 px-5">
+          <h3><strong>3.3 Conclusão</strong></h3>
+          <p>
+            Para o intervalo escolhido, onde ambos os pontos, inicial e final, são raízes da função, temos que os métodos retornam o mesmo
+            resultado. No entanto, se tomarmos uma nova função (ou escolhermos um novo intervalo), iremos encontrar resultados diferentes.
+            Definimos o intervalo $[0, 1/2]$ e mantendo o erro mínimo igual a 0.003. Para o método do retângulo composto, o resultado retornado
+            foi: 0.6975829707484265. E, o número de intervalos utilizados foi de $N = 218$. No entanto, para o método trapezoidal composto, o
+            resultado encontrado foi: 0.6977378812232087. O número de intervalos utilizados foi de $N = 11$. Quando comparamos os dois métodos nessas
+            condições, podemos perceber que o método trapezoidal utiliza menos intervalos para encontrar uma solução com a mesma precisão do método do
+            retângulo.
+            <br>
+            <br>
+            Nos parece que uma comparação entre os métodos não é justa, mas a utilização de cada um, depende das condições iniciais dadas. No início,
+            tomamos o intervalo $[0,\ 1]$ e os resultados encontrados foram iguais. Quando as condições foram alteradas, nesse caso, o intervalo foi alterado,
+            obtivemos resultados totalmente diferentes. Para uma comparação final, irei tomar o número de intervalo do método trapezoidal igual a
+            $N = 218$. O resultado retornado foi: 0.6996696587978966. Calculando o erro relativo real da solução.
+            $$ERR = \left| \frac{Int_{NS} - Int_{R}}{Int_{R}} \right|$$
+            com $Int_{R} = 0.699674588053$, temos
+            $$ERR = \left| \frac{0.6996696587978966 - 0.699674588053}{0.699674588053} \right| = 0.0000007045 $$
+            ou seja, para um mesmo número de intervalos, o erro apresentado pela solução, retornada pelo método, é muito menor (quase mil vezes menor). Portanto,
+            a utilização dos métodos vai depender das condiçõe iniciais dadas pelo problema.
+            
+          </p>
+        </div>
+      </div>
+    </section>
+    
+  </body>
+</html>

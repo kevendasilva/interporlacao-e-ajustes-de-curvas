@@ -1,0 +1,10 @@
+section {
+  border-style: solid;
+}
+
+.code {
+  margin-right: 100px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.815);
+  border-color: black;
+}
